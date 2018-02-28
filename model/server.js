@@ -6,17 +6,15 @@ function insertData (inputData){
     MongoClient.connect(url)
     .then(function(client){
         const collection = client.db("alberlet").collection("lakasok");
-        return new Promise(function(resolve, reject){
-            resolve(collection);
+        collection.insertOne(inputData)
+        .then(function(result){
+            assert.equal(1, result.result.n);
+            console.log("Inserted 1 document into the collection");
         });
+        return client;
     })
-    .then(function(collection){
-        var result = collection.insertOne(inputData);
-        return result;
-    })
-    .then(function(result){
-        assert.equal(1, result.result.n);
-        console.log("Inserted 1 document into the collection");
+    .then(function(client){
+        client.close();
     })
 }
 
