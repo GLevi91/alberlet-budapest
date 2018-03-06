@@ -6,7 +6,7 @@ function insertData (inputData){
     MongoClient.connect(url)
     .then(function(client){
         const collection = client.db("alberlet").collection("lakasok");
-        collection.insertOne(inputData)
+        collection.insertOne(JSON.parse(inputData))
         .then(function(result){
             assert.equal(1, result.result.n);
             console.log("Inserted 1 document into the collection");
